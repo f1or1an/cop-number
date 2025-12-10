@@ -549,7 +549,7 @@ public:
  *
  * For each R-state, next_states is called at most once, taking time O(n). This is negligible.
  *
- * The overall time complexity is #states * exploration_time, i.e. in O((n+k)^(k+2) k 2^k/k!)
+ * The overall time complexity is #states * exploration_time, i.e. in O((n+k)^(k+2) k 2^k / k!)
  *
  *
  * If we do not upper bound degrees of vertices by n, we can probably save a factor of ||G||/|G|.
