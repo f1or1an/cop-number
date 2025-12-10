@@ -618,9 +618,9 @@ void print_state(ostream& os, const state& s, function<string(z)> vertex_names =
         assert(s.gm.attacking && ix==s.gm.GRAVE_VERTEX);
         return GRAVE_NAME;
     };
-    os<<"unmoved:";
+    os<<"unmoved cops:";
     for (z u:s.unmoved_cops) os<<" "<<ix_to_str(u);
-    os<<",  moved:";
+    os<<",  moved cops:";
     for (z u:s.moved_cops) os<<" "<<ix_to_str(u);
     os<<", r: "<<ix_to_str(s.r);
 }
@@ -823,7 +823,7 @@ namespace graph_utils {
         return h;
     }
 
-    vvz line_graph(vvz g) {
+    vvz line_graph(vvz g) { // the vertices {u,v} of the line graph are ordered lexicographically by (min(u,v), max(u,v))
         map<vz, z> edges;
         for (z u = 0; u < g.size(); ++u) {
             for (z v: g[u]) if (u<v) {
