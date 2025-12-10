@@ -90,7 +90,7 @@ public:
         return res;
     }
 
-    multiset<z> id_to_multiset(z n, z k, u64 id) const { // we don't need this to be fast; only called twice per cop state. Time complexity is O(k (n+k))
+    multiset<z> id_to_multiset(z n, z k, u64 id) const { // we don't need this to be fast; only called twice per R-state. Time complexity is O(k (n+k))
         if (k==0) return {};
         assert(id < cnt[k][n]);
         if (id < cnt[k-1][n]) {
