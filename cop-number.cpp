@@ -44,7 +44,7 @@ public:
     auto find(z e) {return ranges::find(v, e);}
     auto insert(const z& e) { return v.insert(ranges::lower_bound(v, e), e); }
     void insert(auto a, auto b) { v.insert(v.end(), a, b); sort(); }
-    auto erase(vz::iterator e) { return v.erase(e);}
+    auto erase(vector<T>::iterator e) { return v.erase(e);}
 };
 
 
