@@ -42,8 +42,8 @@ public:
     auto empty() const { return v.empty(); }
     bool contains(z e) const {return ranges::count(v, e);}
     auto find(z e) {return ranges::find(v, e);}
+    auto insert(const z& e) { return v.insert(ranges::lower_bound(v, e), e); }
     void insert(auto a, auto b) { v.insert(v.end(), a, b); sort(); }
-    auto insert(const z& e) {v.insert(ranges::lower_bound(v, e), e);}
     auto erase(vz::iterator e) { return v.erase(e);}
 };
 
