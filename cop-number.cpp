@@ -523,8 +523,8 @@ public:
  * J. Petr, J. Portier, and L. Versteegen, “A faster algorithm for Cops and Robbers,” Discrete Applied Mathematics, vol. 320, pp. 11–14, 2022, doi: https://doi.org/10.1016/j.dam.2022.05.019.
  *
  *
- * Time complexity:
- * Let n be |G|+1+attacking, i.e. all vertices.
+ * Let n be |G|+1+attacking, i.e. the number of (all) vertices.
+ *
  *
  * Claim: #states <= n (n+k)^k 2^k / k!
  * Proof:
@@ -532,13 +532,23 @@ public:
  *    #states
  * <= sum_moved=0^k (n multichoose moved) (n multichoose k-moved) n
  *  = n sum_moved=0^k (n+moved-1 choose moved) (n+k-moved-1 choose k-moved)
- *  = n sum_moved=0^k (n+k choose moved) (n+k choose k-moved)
+ * <= n sum_moved=0^k (n+k choose moved) (n+k choose k-moved)
  * <= n (n+k)^k sum_moved=0^k 1/moved! 1/(k-moved)!
  *  = n (n+k)^k / k! sum_moved=0^k k! 1/moved! 1/(k-moved)!
  *  = n (n+k)^k / k! sum_moved=0^k (k choose moved)
  *  = n (n+k)^k / k! 2^k
  *  = n (n+k)^k 2^k / k!
  *
+ *
+ * Space complexity:
+ * - #states/8 bytes for the copwin array
+ * - #R-states bytes for the copwin-counter array
+ * - at most 4 #R-states bytes for the queue
+ * We have #R-states <= (n multichoose k) n <= (n+k)^k / k! n = n^(k+1) / k!
+ * => overall space complexity is at most (n+k)^(k+1) / k! (2^k / 8 + 5)   (+ a negligible amount of)   bytes
+ *
+ *
+ * Time complexity:
  * The bfs and dfs together explore each state at most once.
  * One exploration consists of:
  * - calling id_to_state in time O(k (n+k))
@@ -549,12 +559,11 @@ public:
  *
  * For each R-state, next_states is called at most once, taking time O(n). This is negligible.
  *
- * The overall time complexity is #states * exploration_time, i.e. in O((n+k)^(k+2) k 2^k / k!)
+ * The overall time complexity is #states * exploration_time, i.e. O((n+k)^(k+2) k 2^k / k!)
  *
- *
- * If we do not upper bound degrees of vertices by n, we can probably save a factor of ||G||/|G|.
+ * If we do not upper bound degrees of vertices by n, we can probably save a factor of ||G||/|G| in the time complexity analysis.
  */
-result analyze(const game& gm) { // better keep the const! otherwise one might try to call analyze(game(...))...
+result analyze(const game& gm) {
 
     cout<<"required memory: "<<gm.count_states()/8/1e9<<" (copwin)  +  "<<gm.count_r_states()/1e9<<" (copwin_countdown)  +  "<<gm.count_r_states()*4/1e9<<" (queue)  GB"<<endl;
 
