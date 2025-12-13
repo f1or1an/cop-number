@@ -735,7 +735,7 @@ void interact(const game& gm, const result& res, function<string(z)> vertex_name
                 if (!s.is_legal()) { cout<<"Rejected; state not legal."<<endl; goto continu; }
                 if (s.is_final()) { cout<<"Rejected; state final."<<endl; goto continu; }
                 set_cur(s);
-                choose(move);
+                choose(choose);
                 goto continu;
             }
         }
