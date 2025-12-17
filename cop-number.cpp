@@ -833,6 +833,8 @@ namespace graph_utils {
     }
 
     vvz line_graph(vvz g) { // the vertices {u,v} of the line graph are ordered lexicographically by (min(u,v), max(u,v))
+        for (vz& v:g) ranges::sort(v);
+
         map<vz, z> edges;
         for (z u = 0; u < g.size(); ++u) {
             for (z v: g[u]) if (u<v) {
