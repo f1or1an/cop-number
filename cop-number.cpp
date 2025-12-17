@@ -903,6 +903,14 @@ using namespace graph_utils;
 //////////////////////////////////////////////////////////////////// Tests
 ////////////////////////////////////////////////////////////////////
 
+void print(vvz g, function<string(z)> vertex_names = [](z ix){return to_string(ix);}) {
+    for (z u = 0; u < g.size(); ++u) {
+        for (z v:g[u]) {
+            cout<<vertex_names(u)<<" "<<vertex_names(v)<<endl;
+        }
+    }
+}
+
 void test_multiset_enumerator() {
     for (z n: vz{1, 7}) {
         for (z k: vz{1, 2, 5}) {
