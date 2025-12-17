@@ -912,8 +912,8 @@ void print(vvz g, function<string(z)> vertex_names = [](z ix){return to_string(i
 }
 
 void test_multiset_enumerator() {
-    for (z n: vz{1, 7}) {
-        for (z k: vz{1, 2, 5}) {
+    for (z n : {1, 7}) {
+        for (z k : {1, 2, 5}) {
             multiset_enumerator e(n, k);
             auto ms = e.all_multisets(n, k);
             assert(e.count(n, k) == ms.size());
@@ -928,12 +928,12 @@ void test_multiset_enumerator() {
 }
 
 void test_state_enumerator() {
-    for (z normal_vertices: vz{1, 7}) {
-        for (z k: vz{1, 2, 5}) {
-            for (z attacking = 0; attacking < 2; ++attacking) {
-                for (z r_flexible = 0; r_flexible < 2; ++r_flexible) {
+    for (z normal_vertices : {1, 7}) {
+        for (z k : {1, 2, 5}) {
+            for (z attacking : {0, 1}) {
+                for (z r_flexible : {0, 1}) {
                     vvz g(normal_vertices);
-                    game gm(g, k);
+                    game gm(g, k, attacking, r_flexible);
                     z all_vertices = gm.all_vertices;
                     vector<state> states;
                     for (z unmoved = 0; unmoved <= k; ++unmoved) {
@@ -960,9 +960,9 @@ void test_state_enumerator() {
 
 void test_prev_states() {
     for (auto g:{path(1), path(6), cart_prod(cycle(5), path(4)), line_graph(petersen(7))}) {
-        for (z attacking = 0; attacking < 2; ++attacking) {
-            for (z r_flexible = 0; r_flexible < 2; ++r_flexible) {
-                for (z k:{1,3}) {
+        for (z attacking : {0, 1}) {
+            for (z r_flexible : {0, 1}) {
+                for (z k : {1, 3}) {
                     game gm(g, k, attacking, r_flexible);
                     gm.foreach_legal_state([](state s) {
                         for (string direction : vector{"fwd", "bwd"}) {
