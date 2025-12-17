@@ -643,13 +643,13 @@ ostream& operator<<(ostream& os, const state& s) {
  * Plays a game that has been analyzed against a human.
  * Starts in the initial state.
  * (Console) commands:
- * - start with cop turn in c_1 ... c_k r   (cops and r may be "_" (see below))    // Ask whether a state is winning, and if so, for an optimal move
- * - start with R turn in c_1 ... c_k r   (r may be "_" (see below))               // Ask whether a state is winning, and if so, for an optimal move
- * - c_1 ... c_k    // move cops and ask for another optimal move
- * - r              // move R and ask for another optimal move
- * - quit           // end the interaction
+ * - start with cop turn in c_1 ... c_k r   (cops and r may be "_" (see below))     // Ask computer to pick the winning party in the given state, and to move if it's that party's turn
+ * - start with R turn in c_1 ... c_k r   (r may be "_" (see below))                // same as above
+ * - c_1 ... c_k                                                                    // Move the cops and ask for another optimal move. Only possible if it's the cops' turn
+ * - r                                                                              // move R and ask for another optimal move. Only possible if it's R's turn
+ * - quit                                                                           // end the interaction
  *
- * "_" represents INITIAL_VERTEX, "+" represents GRAVE_VERTEX. Entities on such vertices must also be part of the input.
+ * "_" represents INITIAL_VERTEX, "+" represents GRAVE_VERTEX. Entities on such vertices must also be part of the user input.
  */
 void interact(const game& gm, const result& res, function<string(z)> vertex_names = [](z ix){return to_string(ix);}) {
     map<string, z> name_to_index;
